@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nam Pew</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Orbitron',sans-serif;
+}
+
+body{
+background:#000;
+color:#00ffe1;
+text-align:center;
+min-height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+overflow:hidden;
+}
+
+canvas{
+position:fixed;
+top:0;
+left:0;
+z-index:-1;
+}
+
+.container{
+width:90%;
+max-width:500px;
+}
+
+h1{
+font-size:50px;
+letter-spacing:6px;
+margin-bottom:10px;
+animation:glow 2s infinite alternate;
+}
+
+@keyframes glow{
+from{ text-shadow:0 0 10px #00ffe1; }
+to{ text-shadow:0 0 30px #00ffe1,0 0 50px #00ffe1; }
+}
+
+.bio{
+margin-bottom:30px;
+font-size:15px;
+height:20px;
+}
+
+.link{
+display:block;
+border:2px solid #00ffe1;
+padding:15px;
+margin:15px 0;
+border-radius:40px;
+text-decoration:none;
+color:#00ffe1;
+transition:.3s;
+}
+
+.link:hover{
+background:#00ffe1;
+color:#000;
+box-shadow:0 0 20px #00ffe1;
+transform:scale(1.05);
+}
+
+.stats{
+margin-top:20px;
+font-size:14px;
+}
+
+.chat-btn{
+position:fixed;
+bottom:25px;
+right:25px;
+padding:15px 20px;
+background:#00ffe1;
+color:#000;
+border-radius:40px;
+cursor:pointer;
+font-weight:bold;
+box-shadow:0 0 15px #00ffe1;
+transition:.3s;
+}
+
+.chat-btn:hover{
+transform:scale(1.1);
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="bg"></canvas>
+
+<div class="container">
+
+<h1>NAM PEW</h1>
+
+<div class="bio" id="typing"></div>
+
+<a class="link" href="https://www.facebook.com/Nampew05">Facebook</a>
+<a class="link" href="https://www.tiktok.com">TikTok</a>
+<a class="link" href="https://zalo.me/0789115514">Zalo</a>
+<a class="link" href="https://t.me/HnamPew">Telegram</a>
+
+<div class="stats">
+<div>👁 Online: <span id="online">1</span></div>
+<div>📊 Visits: <span id="visit"></span></div>
+</div>
+
+</div>
+
+<div class="chat-btn"
+onclick="window.open('https://m.me/Nampew05','_blank')">
+💬 Chat với tôi
+</div>
+
+<script>
+
+let visit = localStorage.getItem("visit");
+
+if(!visit){
+visit = 1;
+}else{
+visit++;
+}
+
+localStorage.setItem("visit",visit);
+document.getElementById("visit").innerText = visit;
+
+const text="⚡ Gamer | Livestream | Tech";
+let i=0;
+
+function typing(){
+if(i<text.length){
+document.getElementById("typing").innerHTML+=text.charAt(i);
+i++;
+setTimeout(typing,60);
+}
+}
+
+typing();
+
+const canvas=document.getElementById("bg");
+const ctx=canvas.getContext("2d");
+
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+
+let particles=[];
+
+for(let i=0;i<80;i++){
+particles.push({
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height,
+r:Math.random()*2,
+d:Math.random()*1
+});
+}
+
+function draw(){
+ctx.clearRect(0,0,canvas.width,canvas.height);
+
+ctx.fillStyle="#00ffe1";
+
+particles.forEach(p=>{
+ctx.beginPath();
+ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+ctx.fill();
+
+p.y+=p.d;
+
+if(p.y>canvas.height){
+p.y=0;
+}
+});
+
+requestAnimationFrame(draw);
+}
+
+draw();
+
+</script>
+
+</body>
+</html>
